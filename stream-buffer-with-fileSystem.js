@@ -19,10 +19,17 @@ server.on('request', (req,res)=>{
 
 
         readableStream.on('data',(buffer)=>{
+            res.statusCode =  200;
             res.write(buffer);
         })
         readableStream.on('end',()=>{
-            res.end('Response End from readable Stream');
+            res.statusCode =  200;
+            res.end('Streaming was end');
+        })
+        readableStream.on('error',(error)=>{
+            res.statusCode =  404;
+            console.log(error);
+            res.end('Somethings went wrong');
         })
 
 })
